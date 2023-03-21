@@ -26,7 +26,7 @@ class Order(HashModel):
     price: float
     fee: float
     total: float
-    quatity: int
+    quantity: int
     status: str # penfing, completed, refunded
     
     class Meta: 
@@ -34,7 +34,7 @@ class Order(HashModel):
         
 @app.get('/orders/{pk}')
 def get(pk: str): 
-    return Order.get(pk)  
+    return Order.get(pk) 
 
 @app.post('/orders')
 async def create(request: Request, background_tasks: BackgroundTasks): # id, quantity
@@ -48,7 +48,7 @@ async def create(request: Request, background_tasks: BackgroundTasks): # id, qua
         price=product['price'],
         fee=0.2 * product['price'],
         total=1.2 * product['price'],
-        quatity=body['quantity'],
+        quantity=body['quantity'],
         status="pending"
     )
     order.save()
@@ -61,3 +61,4 @@ def order_completed(order: Order):
     time.sleep(5)
     order.status = "completed"
     order.save()
+    redis.xadd('order_completed', order.dict(), '*')

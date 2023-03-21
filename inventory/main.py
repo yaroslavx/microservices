@@ -48,7 +48,7 @@ def create(product: Product):
 def get(pk: str):
     return Product.get(pk)
 
-@app.delete('products/{pl}')
+@app.delete('/products/{pk}')
 def delete(pk: str):
     return Product.delete(pk)
 
