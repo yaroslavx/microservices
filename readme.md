@@ -8,3 +8,4 @@
 git clone // repo UPL
 
 ```
+### In plan, build micro-frontends with monorepo (turborepo/lerna and MF/Single-spa)
